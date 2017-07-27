@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<< 2038b14539355372f6d975a850a5fc06f0b4bbf0
+guid: 23036d0983769c5489c5d312a58a02eb
+folderAsset: yes
+timeCreated: 1476181931
+=======
+guid: b9c34761161d42242a5f18c5f7e1caab
+folderAsset: yes
+timeCreated: 1476189994
+>>>>>>> Rework function Raise/GetDown + Add 2 variables for left and right item in PlayerController
+licenseType: Free
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
