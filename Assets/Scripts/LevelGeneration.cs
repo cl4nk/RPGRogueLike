@@ -1,5 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Character;
+using InteractableObjects;
+using Item;
+using Managers;
+using UI;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -1125,16 +1130,16 @@ public class LevelGeneration : MonoBehaviour
 
     private class PoolObjects
     {
-        private int doorIndex;
         private readonly List<GameObject> doors;
+        private readonly List<GameObject> spawns;
+        private readonly List<GameObject> torchs;
+        private readonly List<GameObject> walls;
+        private int doorIndex;
         private GameObject ground;
         private GameObject roof;
         private int spawnIndex;
-        private readonly List<GameObject> spawns;
         private int torchIndex;
-        private readonly List<GameObject> torchs;
         private int wallIndex;
-        private readonly List<GameObject> walls;
 
         public PoolObjects()
         {
@@ -1265,12 +1270,12 @@ public class LevelGeneration : MonoBehaviour
             Closed
         }
 
+        public readonly bool[] walls;
+
         public int decoIndex = -1;
 
         public CASE_OBJECT obj = CASE_OBJECT.None;
         public DIRECTION objDirection = DIRECTION.North;
-
-        public readonly bool[] walls;
 
         public Cell(int x, int y)
         {

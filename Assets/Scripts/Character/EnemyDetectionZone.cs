@@ -1,29 +1,32 @@
 ﻿using UnityEngine;
 
-public class EnemyDetectionZone : MonoBehaviour
+namespace Character
 {
-    private Transform player;
-
-    private void Awake()
+    public class EnemyDetectionZone : MonoBehaviour
     {
-        transform.parent.GetComponent<PathEnemy>().RangeOfView = GetComponent<SphereCollider>().radius;
-    }
+        private Transform player;
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        if (collider.tag == "Player" && !player)
-            player = collider.transform;
-    }
+        private void Awake()
+        {
+            transform.parent.GetComponent<PathEnemy>().RangeOfView = GetComponent<SphereCollider>().radius;
+        }
 
-    private void Update()
-    {
-        if (player)
-            transform.parent.GetComponent<PathEnemy>().CheckIfPlayerIsSeen(player);
-    }
+        private void OnTriggerEnter(Collider collider)
+        {
+            if (collider.tag == "Player" && !player)
+                player = collider.transform;
+        }
 
-    private void OnTriggerExit(Collider collider)
-    {
-        if (collider.transform == player)
-            player = null;
+        private void Update()
+        {
+            if (player)
+                transform.parent.GetComponent<PathEnemy>().CheckIfPlayerIsSeen(player);
+        }
+
+        private void OnTriggerExit(Collider collider)
+        {
+            if (collider.transform == player)
+                player = null;
+        }
     }
 }

@@ -1,26 +1,30 @@
-﻿using UnityEngine;
+﻿using Character;
+using UnityEngine;
 
-public class AlterationList : MonoBehaviour
+namespace Managers
 {
-    [SerializeField] private string alterateStat;
-    private int nbAlteration;
-
-    private void Update()
+    public class AlterationList : MonoBehaviour
     {
-        if (transform.childCount > 0)
+        [SerializeField] private string alterateStat;
+        private int nbAlteration;
+
+        private void Update()
         {
-            Alteration alteration = transform.GetChild(0).GetComponent<Alteration>();
-
-            if (alteration.PotionState == Alteration.POTIONSTATES.Neutral)
+            if (transform.childCount > 0)
             {
-                AlterationManager.Instance.UpdateFeedBackPotion(alterateStat, alteration.Time);
-                StartCoroutine(alteration.TimeAlteraction());
-            }
+                Alteration alteration = transform.GetChild(0).GetComponent<Alteration>();
 
-            if (nbAlteration != transform.childCount)
-            {
-                nbAlteration = transform.childCount;
-                AlterationManager.Instance.UpdateFeedBackNumberPotion(alterateStat, nbAlteration);
+                if (alteration.PotionState == Alteration.POTIONSTATES.Neutral)
+                {
+                    AlterationManager.Instance.UpdateFeedBackPotion(alterateStat, alteration.Time);
+                    StartCoroutine(alteration.TimeAlteraction());
+                }
+
+                if (nbAlteration != transform.childCount)
+                {
+                    nbAlteration = transform.childCount;
+                    AlterationManager.Instance.UpdateFeedBackNumberPotion(alterateStat, nbAlteration);
+                }
             }
         }
     }

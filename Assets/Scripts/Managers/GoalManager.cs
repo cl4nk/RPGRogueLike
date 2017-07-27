@@ -1,25 +1,29 @@
-﻿using UnityEngine;
+﻿using Item;
+using UnityEngine;
 
-public class GoalManager : MonoBehaviour
+namespace Managers
 {
-    private static GoalManager instance;
-
-    public static GoalManager Instance
+    public class GoalManager : MonoBehaviour
     {
-        get
+        private static GoalManager instance;
+
+        public static GoalManager Instance
         {
-            if (instance == null)
-                instance = FindObjectOfType<GoalManager>();
-            return instance;
+            get
+            {
+                if (instance == null)
+                    instance = FindObjectOfType<GoalManager>();
+                return instance;
+            }
         }
-    }
 
-    public ItemData HasHeTheQuestItem(PlayerInventory inventory)
-    {
-        foreach (ItemData item in inventory.Items)
-            if (item.isQuestItem)
-                return item;
+        public ItemData HasHeTheQuestItem(PlayerInventory inventory)
+        {
+            foreach (ItemData item in inventory.Items)
+                if (item.isQuestItem)
+                    return item;
 
-        return null;
+            return null;
+        }
     }
 }

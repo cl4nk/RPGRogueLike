@@ -1,39 +1,43 @@
-﻿using UnityEngine;
+﻿using Managers;
+using UnityEngine;
 
-public class InGameMenu : MonoBehaviour
+namespace UI
 {
-    private InputManager inputMgr;
-    private UIGame uiGame;
-
-    private void Awake()
+    public class InGameMenu : MonoBehaviour
     {
-        uiGame = transform.parent.GetComponent<UIGame>();
-        inputMgr = InputManager.Instance;
-    }
+        private InputManager inputMgr;
+        private UIGame uiGame;
 
-    public void CharacPressed()
-    {
-        uiGame.TogglePlayerInfo();
-        uiGame.ToggleCharacWindow();
-        inputMgr.LockCharacMenu();
-    }
+        private void Awake()
+        {
+            uiGame = transform.parent.GetComponent<UIGame>();
+            inputMgr = InputManager.Instance;
+        }
 
-    public void MagicPressed()
-    {
-        uiGame.ToggleSpellWindow();
-        inputMgr.LockAllInputs();
-    }
+        public void CharacPressed()
+        {
+            uiGame.TogglePlayerInfo();
+            uiGame.ToggleCharacWindow();
+            inputMgr.LockCharacMenu();
+        }
 
-    public void QuitPressed()
-    {
-        uiGame.ToggleQuitMenu();
-        inputMgr.LockAllInputs();
-    }
+        public void MagicPressed()
+        {
+            uiGame.ToggleSpellWindow();
+            inputMgr.LockAllInputs();
+        }
 
-    public void InventoryPressed()
-    {
-        uiGame.ShowPlayerInventory();
-        uiGame.TogglePlayerInfo();
-        uiGame.ToggleCrosshair();
+        public void QuitPressed()
+        {
+            uiGame.ToggleQuitMenu();
+            inputMgr.LockAllInputs();
+        }
+
+        public void InventoryPressed()
+        {
+            uiGame.ShowPlayerInventory();
+            uiGame.TogglePlayerInfo();
+            uiGame.ToggleCrosshair();
+        }
     }
 }

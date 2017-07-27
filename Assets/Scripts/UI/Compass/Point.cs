@@ -1,40 +1,43 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Point : MonoBehaviour
+namespace UI.Compass
 {
-    private float angleViewCompass;
-    public int instanceID;
-    private float maxValueCompass;
-    public Transform objTransform;
-    private float posXCompass;
-
-    private float widthCompass;
-
-    private float widthPoint;
-
-    private void Start()
+    public class Point : MonoBehaviour
     {
-        widthPoint = GetComponent<Graphic>().rectTransform.rect.width;
+        private float angleViewCompass;
+        public int instanceID;
+        private float maxValueCompass;
+        public Transform objTransform;
+        private float posXCompass;
 
-        widthCompass = transform.parent.GetComponent<Graphic>().rectTransform.rect.width;
-        posXCompass = transform.parent.transform.localPosition.x;
+        private float widthCompass;
 
-        Compass compass = transform.parent.GetComponent<Compass>();
-        angleViewCompass = compass.AngleViewCompass;
-        maxValueCompass = compass.MaxValue;
-    }
+        private float widthPoint;
 
-    public void UpdatePosition(float angle)
-    {
-        Vector3 pos = transform.localPosition;
-        pos.x = angle * ((widthCompass - widthPoint) / 2) / (maxValueCompass - angleViewCompass / 2);
-        transform.localPosition = pos;
-    }
+        private void Start()
+        {
+            widthPoint = GetComponent<Graphic>().rectTransform.rect.width;
 
-    public bool IsInsideCompass()
-    {
-        return posXCompass + widthCompass / 2 > transform.localPosition.x &&
-               transform.localPosition.x > posXCompass - widthCompass / 2;
+            widthCompass = transform.parent.GetComponent<Graphic>().rectTransform.rect.width;
+            posXCompass = transform.parent.transform.localPosition.x;
+
+            Compass compass = transform.parent.GetComponent<Compass>();
+            angleViewCompass = compass.AngleViewCompass;
+            maxValueCompass = compass.MaxValue;
+        }
+
+        public void UpdatePosition(float angle)
+        {
+            Vector3 pos = transform.localPosition;
+            pos.x = angle * ((widthCompass - widthPoint) / 2) / (maxValueCompass - angleViewCompass / 2);
+            transform.localPosition = pos;
+        }
+
+        public bool IsInsideCompass()
+        {
+            return posXCompass + widthCompass / 2 > transform.localPosition.x &&
+                   transform.localPosition.x > posXCompass - widthCompass / 2;
+        }
     }
 }

@@ -1,31 +1,35 @@
 ﻿using System;
+using Managers;
 
-[Serializable]
-public class ShopInventory : Inventory
+namespace Item.Shop
 {
-    private PlayerInventory playerInventory;
-
-    protected override void Start()
+    [Serializable]
+    public class ShopInventory : Inventory
     {
-        base.Start();
+        private PlayerInventory playerInventory;
 
-        playerInventory = GameManager.Instance.PlayerInstance.GetComponent<PlayerInventory>();
-    }
-
-    public bool BuyItem(ItemData item)
-    {
-        if (player.Gold >= item.value && playerInventory.AddItem(item))
+        protected override void Start()
         {
-            player.Gold -= item.value;
-            RemoveFromShop(item);
-            return true;
+            base.Start();
+
+            playerInventory = GameManager.Instance.PlayerInstance.GetComponent<PlayerInventory>();
         }
 
-        return false;
-    }
+        public bool BuyItem(ItemData item)
+        {
+            if (player.Gold >= item.value && playerInventory.AddItem(item))
+            {
+                player.Gold -= item.value;
+                RemoveFromShop(item);
+                return true;
+            }
 
-    private void RemoveFromShop(ItemData item)
-    {
-        Items.Remove(item);
+            return false;
+        }
+
+        private void RemoveFromShop(ItemData item)
+        {
+            Items.Remove(item);
+        }
     }
 }

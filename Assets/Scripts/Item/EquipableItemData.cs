@@ -1,13 +1,16 @@
-﻿public abstract class EquipableItemData : ItemData
+﻿namespace Item
 {
-    public int constitution;
-    public int dexterity;
-    public int intelligence;
-    public int strenght;
-
-    public override string ToString()
+    public abstract class EquipableItemData : ItemData
     {
-        return "Strenght : " + strenght + "\nDexterity : " + dexterity + "\nConstitution : " + constitution +
-               "\nIntelligence : " + intelligence;
+        public int constitution;
+        public int dexterity;
+        public int intelligence;
+        public int strenght;
+
+        public override string ToString()
+        {
+            return "Strenght : " + strenght + "\nDexterity : " + dexterity + "\nConstitution : " + constitution +
+                   "\nIntelligence : " + intelligence;
+        }
     }
 }

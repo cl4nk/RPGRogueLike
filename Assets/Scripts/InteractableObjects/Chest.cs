@@ -1,79 +1,84 @@
-﻿using UnityEngine;
+﻿using Item;
+using UI;
+using UnityEngine;
 
-public class Chest : InteractableObject
+namespace InteractableObjects
 {
-    private float angle;
-    [SerializeField] private float animationSpeed;
-
-    private bool animChest;
-    [SerializeField] private LootInventory lootInventory;
-    private readonly float maxAngle = 50;
-    private bool opened;
-
-    private Vector3 pivot;
-
-    private UIGame uiGame;
-
-    private Transform upPart;
-
-    private void Start()
+    public class Chest : InteractableObject
     {
-        uiGame = UIGame.Instance;
+        private readonly float maxAngle = 50;
+        private float angle;
+        [SerializeField] private float animationSpeed;
 
-        ResetChest();
-    }
+        private bool animChest;
+        [SerializeField] private LootInventory lootInventory;
+        private bool opened;
 
-    public void ResetChest()
-    {
-        upPart = transform.Find("UpPart");
-        pivot = upPart.position;
-        pivot.y -= upPart.localScale.y / 2;
-        pivot.z += upPart.localScale.z / 2;
-    }
+        private Vector3 pivot;
 
-    private void Update()
-    {
-        FixedUpdate();
-        if (animChest)
-            AnimChest();
-    }
+        private UIGame uiGame;
 
-    public override void OnUse()
-    {
-        opened = !opened;
-        animChest = true;
+        private Transform upPart;
 
-        if (opened)
+        private void Start()
         {
-            UIGame.Instance.ToggleInventoryWindow(lootInventory);
-            inputMgr.LockInventory();
-            uiGame.playerCam.ToggleCursorLock();
+            uiGame = UIGame.Instance;
+
+            ResetChest();
         }
-    }
 
-    private void AnimChest()
-    {
-        if (opened)
-            OpenChest();
-        else
-            CloseChest();
-    }
+        public void ResetChest()
+        {
+            upPart = transform.Find("UpPart");
+            pivot = upPart.position;
+            pivot.y -= upPart.localScale.y / 2;
+            pivot.z += upPart.localScale.z / 2;
+        }
 
-    private void OpenChest()
-    {
-        angle += animationSpeed * Time.fixedDeltaTime;
-        upPart.RotateAround(pivot, transform.right, animationSpeed * Time.fixedDeltaTime);
+        private void Update()
+        {
+            FixedUpdate();
+            if (animChest)
+                AnimChest();
+        }
 
-        if (angle >= maxAngle)
-            animChest = false;
-    }
+        public override void OnUse()
+        {
+            opened = !opened;
+            animChest = true;
 
-    private void CloseChest()
-    {
-        angle -= animationSpeed * Time.deltaTime;
-        upPart.RotateAround(pivot, transform.right, -animationSpeed * Time.deltaTime);
+            if (opened)
+            {
+                UIGame.Instance.ToggleInventoryWindow(lootInventory);
+                inputMgr.LockInventory();
+                uiGame.playerCam.ToggleCursorLock();
+            }
+        }
 
-        if (angle <= 0)
-            animChest = false;
+        private void AnimChest()
+        {
+            if (opened)
+                OpenChest();
+            else
+                CloseChest();
+        }
+
+        private void OpenChest()
+        {
+            angle += animationSpeed * Time.fixedDeltaTime;
+            upPart.RotateAround(pivot, transform.right, animationSpeed * Time.fixedDeltaTime);
+
+            if (angle >= maxAngle)
+                animChest = false;
+        }
+
+        private void CloseChest()
+        {
+            angle -= animationSpeed * Time.deltaTime;
+            upPart.RotateAround(pivot, transform.right, -animationSpeed * Time.deltaTime);
+
+            if (angle <= 0)
+                animChest = false;
+        }
     }
 }

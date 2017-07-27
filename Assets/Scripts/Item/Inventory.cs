@@ -1,31 +1,36 @@
 ﻿using System.Collections.Generic;
+using Character;
+using Managers;
 using UnityEngine;
 
-public abstract class Inventory : MonoBehaviour
+namespace Item
 {
-    [SerializeField] private List<ItemData> items;
-
-    protected Player player;
-
-    public List<ItemData> Items
+    public abstract class Inventory : MonoBehaviour
     {
-        get { return items; }
-        protected set { items = value; }
-    }
+        [SerializeField] private List<ItemData> items;
 
-    protected virtual void Start()
-    {
-        player = GameManager.Instance.PlayerInstance.Player;
+        protected Player player;
 
-        for (int i = 0; i < items.Count; ++i)
-            items[i] = Instantiate(items[i]);
-    }
+        public List<ItemData> Items
+        {
+            get { return items; }
+            protected set { items = value; }
+        }
 
-    protected bool CanTake(ItemData item)
-    {
-        if (player.CurWeight + item.weight <= player.MaxWeight)
-            return true;
+        protected virtual void Start()
+        {
+            player = GameManager.Instance.PlayerInstance.Player;
 
-        return false;
+            for (int i = 0; i < items.Count; ++i)
+                items[i] = Instantiate(items[i]);
+        }
+
+        protected bool CanTake(ItemData item)
+        {
+            if (player.CurWeight + item.weight <= player.MaxWeight)
+                return true;
+
+            return false;
+        }
     }
 }

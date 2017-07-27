@@ -1,19 +1,25 @@
-﻿public class LootEnemy : InteractableObject
+﻿using InteractableObjects;
+using UI;
+
+namespace Item
 {
-    private LootInventory lootInventory;
-    private UIGame uiGame;
-
-    private void Start()
+    public class LootEnemy : InteractableObject
     {
-        uiGame = UIGame.Instance;
+        private LootInventory lootInventory;
+        private UIGame uiGame;
 
-        lootInventory = gameObject.GetComponent<LootInventory>();
-    }
+        private void Start()
+        {
+            uiGame = UIGame.Instance;
 
-    public override void OnUse()
-    {
-        UIGame.Instance.ToggleInventoryWindow(lootInventory);
-        inputMgr.LockInventory();
-        uiGame.playerCam.ToggleCursorLock();
+            lootInventory = gameObject.GetComponent<LootInventory>();
+        }
+
+        public override void OnUse()
+        {
+            UIGame.Instance.ToggleInventoryWindow(lootInventory);
+            inputMgr.LockInventory();
+            uiGame.playerCam.ToggleCursorLock();
+        }
     }
 }

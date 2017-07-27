@@ -1,63 +1,66 @@
 ﻿using UnityEngine;
 
-public class Door : InteractableObject
+namespace InteractableObjects
 {
-    private float angle;
-    [SerializeField] private float animationSpeed = 10;
-
-    private bool animDoor;
-    private readonly float maxAngle = 90;
-    private bool opened;
-
-    private Vector3 pivot;
-
-    private void Start()
+    public class Door : InteractableObject
     {
-        ResetPivot();
-    }
+        private readonly float maxAngle = 90;
+        private float angle;
+        [SerializeField] private float animationSpeed = 10;
 
-    public void ResetPivot()
-    {
-        float width = transform.localScale.x;
-        pivot = transform.position + transform.right * (width / 2);
-    }
+        private bool animDoor;
+        private bool opened;
 
-    protected override void FixedUpdate()
-    {
-        base.FixedUpdate();
-        if (animDoor)
-            AnimDoor();
-    }
+        private Vector3 pivot;
 
-    public override void OnUse()
-    {
-        opened = !opened;
-        animDoor = true;
-    }
+        private void Start()
+        {
+            ResetPivot();
+        }
 
-    private void AnimDoor()
-    {
-        if (opened)
-            OpenDoor();
-        else
-            CloseDoor();
-    }
+        public void ResetPivot()
+        {
+            float width = transform.localScale.x;
+            pivot = transform.position + transform.right * (width / 2);
+        }
 
-    private void OpenDoor()
-    {
-        angle -= Time.fixedDeltaTime * animationSpeed;
-        transform.RotateAround(pivot, Vector3.up, -animationSpeed * Time.deltaTime);
+        protected override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            if (animDoor)
+                AnimDoor();
+        }
 
-        if (angle <= -maxAngle)
-            animDoor = false;
-    }
+        public override void OnUse()
+        {
+            opened = !opened;
+            animDoor = true;
+        }
 
-    private void CloseDoor()
-    {
-        angle += Time.fixedDeltaTime * animationSpeed;
-        transform.RotateAround(pivot, Vector3.up, animationSpeed * Time.deltaTime);
+        private void AnimDoor()
+        {
+            if (opened)
+                OpenDoor();
+            else
+                CloseDoor();
+        }
 
-        if (angle >= 0)
-            animDoor = false;
+        private void OpenDoor()
+        {
+            angle -= Time.fixedDeltaTime * animationSpeed;
+            transform.RotateAround(pivot, Vector3.up, -animationSpeed * Time.deltaTime);
+
+            if (angle <= -maxAngle)
+                animDoor = false;
+        }
+
+        private void CloseDoor()
+        {
+            angle += Time.fixedDeltaTime * animationSpeed;
+            transform.RotateAround(pivot, Vector3.up, animationSpeed * Time.deltaTime);
+
+            if (angle >= 0)
+                animDoor = false;
+        }
     }
 }

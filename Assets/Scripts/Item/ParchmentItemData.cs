@@ -1,21 +1,26 @@
-﻿using UnityEngine;
+﻿using Character;
+using Managers;
+using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Parchment", menuName = "Items/Parchment", order = 1)]
-public class ParchmentItemData : UsableItemData
+namespace Item
 {
-    private void OnEnable()
+    [CreateAssetMenu(fileName = "New Parchment", menuName = "Items/Parchment", order = 1)]
+    public class ParchmentItemData : UsableItemData
     {
-        type = TYPE.PARCHMENT;
-    }
-
-    public override void Use(Player player)
-    {
-        LevelManager levelMgr = LevelManager.Instance;
-
-        if (levelMgr.Place != LevelManager.PLACES.CampFire)
+        private void OnEnable()
         {
-            player.GetComponent<PlayerInventory>().RemoveItem(this);
-            levelMgr.Place = LevelManager.PLACES.CampFire;
+            type = TYPE.PARCHMENT;
+        }
+
+        public override void Use(Player player)
+        {
+            LevelManager levelMgr = LevelManager.Instance;
+
+            if (levelMgr.Place != LevelManager.PLACES.CampFire)
+            {
+                player.GetComponent<PlayerInventory>().RemoveItem(this);
+                levelMgr.Place = LevelManager.PLACES.CampFire;
+            }
         }
     }
 }

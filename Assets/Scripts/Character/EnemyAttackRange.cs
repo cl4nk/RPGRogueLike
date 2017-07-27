@@ -1,20 +1,23 @@
 ﻿using UnityEngine;
 
-public class EnemyAttackRange : MonoBehaviour
+namespace Character
 {
-    private Character charac; // enemy
-
-    private void Awake()
+    public class EnemyAttackRange : MonoBehaviour
     {
-        charac = transform.parent.GetComponent<Character>();
-    }
+        private Character charac; // enemy
 
-    private void OnTriggerStay(Collider collider)
-    {
-        if (collider.tag == "Player" && charac.State == Character.STATES.Neutral)
+        private void Awake()
         {
-            StartCoroutine(charac.CouldownAttack());
-            charac.Attack();
+            charac = transform.parent.GetComponent<Character>();
+        }
+
+        private void OnTriggerStay(Collider collider)
+        {
+            if (collider.tag == "Player" && charac.State == Character.STATES.Neutral)
+            {
+                StartCoroutine(charac.CouldownAttack());
+                charac.Attack();
+            }
         }
     }
 }

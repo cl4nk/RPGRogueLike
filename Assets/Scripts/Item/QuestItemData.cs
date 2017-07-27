@@ -1,10 +1,13 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Quest Item", menuName = "Items/QuestItem", order = 1)]
-public class QuestItemData : ItemData
+namespace Item
 {
-    private void OnEnable()
+    [CreateAssetMenu(fileName = "New Quest Item", menuName = "Items/QuestItem", order = 1)]
+    public class QuestItemData : ItemData
     {
-        type = TYPE.QUEST_ITEM;
+        private void OnEnable()
+        {
+            type = TYPE.QUEST_ITEM;
+        }
     }
 }

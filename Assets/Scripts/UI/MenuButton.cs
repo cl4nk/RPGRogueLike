@@ -2,57 +2,60 @@
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class MenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
+namespace UI
 {
-    public delegate void SimpleDelegate();
-
-    public bool attachToNavMenu = true;
-
-    public Color color = Color.white;
-    private Color defaultColor;
-    private Outline outline;
-
-    public void OnDeselect(BaseEventData eventData)
+    public class MenuButton : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        RemoveEffect();
-    }
+        public delegate void SimpleDelegate();
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        ApplyEffect();
-    }
+        public bool attachToNavMenu = true;
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        RemoveEffect();
-    }
+        public Color color = Color.white;
+        private Color defaultColor;
+        private Outline outline;
 
-    public void OnSelect(BaseEventData eventData)
-    {
-        ApplyEffect();
-    }
+        public void OnDeselect(BaseEventData eventData)
+        {
+            RemoveEffect();
+        }
 
-    public event SimpleDelegate OnSelected;
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            ApplyEffect();
+        }
 
-    private void Start()
-    {
-        outline = GetComponentInChildren<Outline>();
-        defaultColor = outline.effectColor;
-    }
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            RemoveEffect();
+        }
 
-    private void ApplyEffect()
-    {
-        if (outline)
-            outline.effectColor = color;
-        transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
-        if (OnSelected != null)
-            OnSelected();
-    }
+        public void OnSelect(BaseEventData eventData)
+        {
+            ApplyEffect();
+        }
 
-    private void RemoveEffect()
-    {
-        if (outline)
-            outline.effectColor = defaultColor;
-        transform.localScale = new Vector3(1, 1, 1);
+        public event SimpleDelegate OnSelected;
+
+        private void Start()
+        {
+            outline = GetComponentInChildren<Outline>();
+            defaultColor = outline.effectColor;
+        }
+
+        private void ApplyEffect()
+        {
+            if (outline)
+                outline.effectColor = color;
+            transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+            if (OnSelected != null)
+                OnSelected();
+        }
+
+        private void RemoveEffect()
+        {
+            if (outline)
+                outline.effectColor = defaultColor;
+            transform.localScale = new Vector3(1, 1, 1);
+        }
     }
 }

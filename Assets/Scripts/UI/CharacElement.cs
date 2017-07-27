@@ -1,82 +1,85 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacElement : MonoBehaviour
+namespace UI
 {
-    private Text characNbLabel;
-
-    private Characteristics characWindow;
-    [SerializeField] [TextArea(3, 10)] private string description;
-    private Text modifierLabel;
-    private string modifierText;
-
-    private int valueCharac;
-
-    public string CharacText { get; set; }
-
-    public int ValueCharac
+    public class CharacElement : MonoBehaviour
     {
-        get { return valueCharac; }
-        set
+        private Text characNbLabel;
+
+        private Characteristics characWindow;
+        [SerializeField] [TextArea(3, 10)] private string description;
+        private Text modifierLabel;
+        private string modifierText;
+
+        private int valueCharac;
+
+        public string CharacText { get; set; }
+
+        public int ValueCharac
         {
-            valueCharac = value;
-            RefreshNbLabel();
+            get { return valueCharac; }
+            set
+            {
+                valueCharac = value;
+                RefreshNbLabel();
+            }
         }
-    }
 
-    public int AllocatedPoints { get; set; }
+        public int AllocatedPoints { get; set; }
 
-    private void Awake()
-    {
-        characWindow = transform.parent.GetComponent<Characteristics>();
-        characNbLabel = transform.Find("CharacNbLabel").GetComponent<Text>();
-        modifierLabel = transform.Find("ModifierLabel").GetComponent<Text>();
-
-        CharacText = transform.Find("CharacLabel").GetComponent<Text>().text;
-        modifierText = modifierLabel.text;
-    }
-
-    public void RefreshNbLabel()
-    {
-        characNbLabel.text = valueCharac.ToString();
-    }
-
-    public void RefreshModifier()
-    {
-        modifierLabel.text = string.Format(modifierText, AllocatedPoints);
-    }
-
-    public void PlusValue()
-    {
-        if (characWindow.CanSpent())
+        private void Awake()
         {
-            ValueCharac++;
-            AllocatedPoints++;
+            characWindow = transform.parent.GetComponent<Characteristics>();
+            characNbLabel = transform.Find("CharacNbLabel").GetComponent<Text>();
+            modifierLabel = transform.Find("ModifierLabel").GetComponent<Text>();
 
-            RefreshModifier();
-            characWindow.OnePointSpent();
+            CharacText = transform.Find("CharacLabel").GetComponent<Text>().text;
+            modifierText = modifierLabel.text;
         }
-    }
 
-    public void MinusValue()
-    {
-        if (AllocatedPoints > 0)
+        public void RefreshNbLabel()
         {
-            ValueCharac--;
-            AllocatedPoints--;
-
-            RefreshModifier();
-            characWindow.OnePointRefund();
+            characNbLabel.text = valueCharac.ToString();
         }
-    }
 
-    public void OnMouseEnter()
-    {
-        characWindow.ChangeDescription(description);
-    }
+        public void RefreshModifier()
+        {
+            modifierLabel.text = string.Format(modifierText, AllocatedPoints);
+        }
 
-    public void OnMouseExit()
-    {
-        characWindow.ChangeDescription("");
+        public void PlusValue()
+        {
+            if (characWindow.CanSpent())
+            {
+                ValueCharac++;
+                AllocatedPoints++;
+
+                RefreshModifier();
+                characWindow.OnePointSpent();
+            }
+        }
+
+        public void MinusValue()
+        {
+            if (AllocatedPoints > 0)
+            {
+                ValueCharac--;
+                AllocatedPoints--;
+
+                RefreshModifier();
+                characWindow.OnePointRefund();
+            }
+        }
+
+        public void OnMouseEnter()
+        {
+            characWindow.ChangeDescription(description);
+        }
+
+        public void OnMouseExit()
+        {
+            characWindow.ChangeDescription("");
+        }
     }
 }

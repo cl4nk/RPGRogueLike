@@ -1,47 +1,50 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class PotionSprite : MonoBehaviour
+namespace UI
 {
-    private Image image;
-    private Text numberLabel;
-    private float time;
-    private float timeMax;
-
-    private void Start()
+    public class PotionSprite : MonoBehaviour
     {
-        image = GetComponent<Image>();
-        numberLabel = transform.GetChild(0).GetComponent<Text>();
-    }
+        private Image image;
+        private Text numberLabel;
+        private float time;
+        private float timeMax;
 
-    public void ShowPotion(float _time)
-    {
-        time = _time;
-        timeMax = _time;
-
-        image.fillAmount = 1;
-        numberLabel.enabled = true;
-    }
-
-    public void UpdateNumberPotion(int nbPotion)
-    {
-        numberLabel.text = "x" + nbPotion;
-    }
-
-    private void Update()
-    {
-        if (time > 0)
+        private void Start()
         {
-            time -= Time.deltaTime;
+            image = GetComponent<Image>();
+            numberLabel = transform.GetChild(0).GetComponent<Text>();
+        }
 
-            if (time <= 0)
+        public void ShowPotion(float _time)
+        {
+            time = _time;
+            timeMax = _time;
+
+            image.fillAmount = 1;
+            numberLabel.enabled = true;
+        }
+
+        public void UpdateNumberPotion(int nbPotion)
+        {
+            numberLabel.text = "x" + nbPotion;
+        }
+
+        private void Update()
+        {
+            if (time > 0)
             {
-                numberLabel.enabled = false;
-                image.fillAmount = 0;
-            }
-            else
-            {
-                image.fillAmount = time / timeMax;
+                time -= Time.deltaTime;
+
+                if (time <= 0)
+                {
+                    numberLabel.enabled = false;
+                    image.fillAmount = 0;
+                }
+                else
+                {
+                    image.fillAmount = time / timeMax;
+                }
             }
         }
     }

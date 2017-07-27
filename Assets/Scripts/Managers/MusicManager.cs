@@ -1,27 +1,30 @@
 ﻿using UnityEngine;
 
-public class MusicManager : MonoBehaviour
+namespace Managers
 {
-    private AudioSource source;
-
-    // Use this for initialization
-    private void Awake()
+    public class MusicManager : MonoBehaviour
     {
-        source = GetComponent<AudioSource>();
-        GameManager.Instance.OnMainMenu += PlayMainMenuMusic;
-        GameManager.Instance.OnLoading += PlayLoadingMusic;
-        GameManager.Instance.OnPlaying += PlayGameMusic;
-    }
+        private AudioSource source;
 
-    private void PlayMainMenuMusic()
-    {
-    }
+        // Use this for initialization
+        private void Awake()
+        {
+            source = GetComponent<AudioSource>();
+            GameManager.Instance.OnMainMenu += PlayMainMenuMusic;
+            GameManager.Instance.OnLoading += PlayLoadingMusic;
+            GameManager.Instance.OnPlaying += PlayGameMusic;
+        }
 
-    private void PlayLoadingMusic()
-    {
-    }
+        private void PlayMainMenuMusic()
+        {
+        }
 
-    private void PlayGameMusic()
-    {
+        private void PlayLoadingMusic()
+        {
+        }
+
+        private void PlayGameMusic()
+        {
+        }
     }
 }

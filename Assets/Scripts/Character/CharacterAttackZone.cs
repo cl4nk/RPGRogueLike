@@ -2,34 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterAttackZone : MonoBehaviour
+namespace Character
 {
-    private readonly List<Character> alreadyTouchedCharacters = new List<Character>();
-    private Character charac; // parent of the attack zone
-
-    private void Awake()
+    public class CharacterAttackZone : MonoBehaviour
     {
-        charac = transform.parent.GetComponent<Character>();
-    }
+        private readonly List<Character> alreadyTouchedCharacters = new List<Character>();
+        private Character charac; // parent of the attack zone
 
-    private void OnTriggerEnter(Collider collider)
-    {
-        int colliderLayer = collider.gameObject.layer;
-        Character touchedCharac = collider.GetComponent<Character>();
-
-        if (colliderLayer == LayerMask.NameToLayer("Character") && touchedCharac != charac &&
-            !alreadyTouchedCharacters.Contains(touchedCharac))
+        private void Awake()
         {
-            touchedCharac.UndergoAttack(charac.MakeDamage(), charac);
-            alreadyTouchedCharacters.Add(touchedCharac);
+            charac = transform.parent.GetComponent<Character>();
         }
-    }
 
-    public IEnumerator ActiveFor(float time)
-    {
-        gameObject.SetActive(true);
-        yield return new WaitForSeconds(time);
-        alreadyTouchedCharacters.Clear();
-        gameObject.SetActive(false);
+        private void OnTriggerEnter(Collider collider)
+        {
+            int colliderLayer = collider.gameObject.layer;
+            Character touchedCharac = collider.GetComponent<Character>();
+
+            if (colliderLayer == LayerMask.NameToLayer("Character") && touchedCharac != charac &&
+                !alreadyTouchedCharacters.Contains(touchedCharac))
+            {
+                touchedCharac.UndergoAttack(charac.MakeDamage(), charac);
+                alreadyTouchedCharacters.Add(touchedCharac);
+            }
+        }
+
+        public IEnumerator ActiveFor(float time)
+        {
+            gameObject.SetActive(true);
+            yield return new WaitForSeconds(time);
+            alreadyTouchedCharacters.Clear();
+            gameObject.SetActive(false);
+        }
     }
 }

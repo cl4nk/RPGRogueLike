@@ -1,19 +1,25 @@
-﻿public class ShopPNJ : InteractableObject
+﻿using InteractableObjects;
+using UI;
+
+namespace Item.Shop
 {
-    private ShopInventory shopInventory;
-    private UIGame uiGame;
-
-    private void Start()
+    public class ShopPNJ : InteractableObject
     {
-        uiGame = UIGame.Instance;
+        private ShopInventory shopInventory;
+        private UIGame uiGame;
 
-        shopInventory = gameObject.GetComponent<ShopInventory>();
-    }
+        private void Start()
+        {
+            uiGame = UIGame.Instance;
 
-    public override void OnUse()
-    {
-        UIGame.Instance.ToggleInventoryWindow(shopInventory);
-        inputMgr.LockInventory();
-        uiGame.playerCam.ToggleCursorLock();
+            shopInventory = gameObject.GetComponent<ShopInventory>();
+        }
+
+        public override void OnUse()
+        {
+            UIGame.Instance.ToggleInventoryWindow(shopInventory);
+            inputMgr.LockInventory();
+            uiGame.playerCam.ToggleCursorLock();
+        }
     }
 }

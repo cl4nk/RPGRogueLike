@@ -11,10 +11,10 @@ public class ThrowingWeapon : MonoBehaviour
 
     private Vector3 direction;
     [SerializeField] private float speed = 20f;
-    private Character thrower;
+    private Character.Character thrower;
     private THROWINGWEAPONSTATES weaponState = THROWINGWEAPONSTATES.Neutral;
 
-    public void Launch(Character character, Vector3 dir)
+    public void Launch(Character.Character character, Vector3 dir)
     {
         transform.forward = dir;
         transform.RotateAround(transform.position, character.transform.right, 90f);
@@ -36,7 +36,7 @@ public class ThrowingWeapon : MonoBehaviour
             if (collision.gameObject.layer == LayerMask.NameToLayer("Character") &&
                 collision.gameObject.name != thrower.name)
             {
-                Character touchedCharac = collision.gameObject.GetComponent<Character>();
+                Character.Character touchedCharac = collision.gameObject.GetComponent<Character.Character>();
                 touchedCharac.UndergoAttack(thrower.MakeDamage(), thrower);
             }
             else if (collision.gameObject.tag == "Wall")

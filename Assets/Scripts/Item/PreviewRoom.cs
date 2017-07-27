@@ -1,32 +1,35 @@
 ﻿using UnityEngine;
 
-public class PreviewRoom : MonoBehaviour
+namespace Item
 {
-    private Animator itemAnimator;
-    private Transform itemPosition;
-
-    private void Start()
+    public class PreviewRoom : MonoBehaviour
     {
-        itemPosition = transform.Find("ItemPosition");
-        itemAnimator = itemPosition.GetComponent<Animator>();
-    }
+        private Animator itemAnimator;
+        private Transform itemPosition;
 
-    public void UpdatePreviewPanel(ItemData item)
-    {
-        if (itemPosition.childCount != 0)
-            Destroy(itemPosition.GetChild(0).gameObject);
+        private void Start()
+        {
+            itemPosition = transform.Find("ItemPosition");
+            itemAnimator = itemPosition.GetComponent<Animator>();
+        }
 
-        GameObject itemToShow;
-        itemToShow = Instantiate(item.prefab);
-        itemToShow.transform.SetParent(itemPosition);
-        itemToShow.transform.localPosition = Vector3.zero;
+        public void UpdatePreviewPanel(ItemData item)
+        {
+            if (itemPosition.childCount != 0)
+                Destroy(itemPosition.GetChild(0).gameObject);
 
-        itemAnimator.Play("ItemRotation");
-    }
+            GameObject itemToShow;
+            itemToShow = Instantiate(item.prefab);
+            itemToShow.transform.SetParent(itemPosition);
+            itemToShow.transform.localPosition = Vector3.zero;
 
-    public void ResetPreviewPanel()
-    {
-        if (itemPosition.childCount != 0)
-            Destroy(itemPosition.GetChild(0).gameObject);
+            itemAnimator.Play("ItemRotation");
+        }
+
+        public void ResetPreviewPanel()
+        {
+            if (itemPosition.childCount != 0)
+                Destroy(itemPosition.GetChild(0).gameObject);
+        }
     }
 }

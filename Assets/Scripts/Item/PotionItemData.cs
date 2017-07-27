@@ -1,41 +1,47 @@
-﻿using UnityEngine;
+﻿using Character;
+using Managers;
+using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Potion", menuName = "Items/Potion", order = 1)]
-public class PotionItemData : UsableItemData
+namespace Item
 {
-    public int constitution;
-    public int dexterity;
-    public int intelligence;
-
-    public int life;
-    public int mana;
-    public int strenght;
-    public float time;
-
-    private void OnEnable()
+    [CreateAssetMenu(fileName = "New Potion", menuName = "Items/Potion", order = 1)]
+    public class PotionItemData : UsableItemData
     {
-        type = TYPE.POTION;
-    }
+        public int constitution;
+        public int dexterity;
+        public int intelligence;
 
-    public override string ToString()
-    {
-        return "Strenght : " + strenght + "\nDexterity : " + dexterity + "\nConstitution : " + constitution +
-               "\nIntelligence : " + intelligence + "\nLife : " + life + "\nMana : " + mana + "\nTime : " + time + " s";
-    }
+        public int life;
+        public int mana;
+        public int strenght;
+        public float time;
 
-    public override void Use(Player player)
-    {
-        if (mana == 0 && life == 0)
-            AlterationManager.Instance.AddAlteration(strenght, constitution, intelligence, dexterity, time, player);
-        else
-            RegenLifeMana(player);
+        private void OnEnable()
+        {
+            type = TYPE.POTION;
+        }
 
-        player.GetComponent<PlayerInventory>().RemoveItem(this);
-    }
+        public override string ToString()
+        {
+            return "Strenght : " + strenght + "\nDexterity : " + dexterity + "\nConstitution : " + constitution +
+                   "\nIntelligence : " + intelligence + "\nLife : " + life + "\nMana : " + mana + "\nTime : " + time +
+                   " s";
+        }
 
-    private void RegenLifeMana(Player player)
-    {
-        player.CurLife += life;
-        player.CurMana += mana;
+        public override void Use(Player player)
+        {
+            if (mana == 0 && life == 0)
+                AlterationManager.Instance.AddAlteration(strenght, constitution, intelligence, dexterity, time, player);
+            else
+                RegenLifeMana(player);
+
+            player.GetComponent<PlayerInventory>().RemoveItem(this);
+        }
+
+        private void RegenLifeMana(Player player)
+        {
+            player.CurLife += life;
+            player.CurMana += mana;
+        }
     }
 }

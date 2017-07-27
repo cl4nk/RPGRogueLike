@@ -1,45 +1,48 @@
 ﻿using UnityEngine;
 
-public class CamAnimators : MonoBehaviour
+namespace Character
 {
-    private Animation anim;
-
-    private bool left = true;
-    private CharacterController playerController;
-    private bool right;
-
-    private void Awake()
+    public class CamAnimators : MonoBehaviour
     {
-        playerController = transform.parent.GetComponent<CharacterController>();
-        anim = GetComponent<Animation>();
-    }
+        private Animation anim;
 
-    private void WalkAnimators()
-    {
-        if (playerController.isGrounded)
-            if (transform.parent.GetComponent<PlayerController>().IsMoving)
-                if (left)
-                {
-                    if (!anim.isPlaying)
+        private bool left = true;
+        private CharacterController playerController;
+        private bool right;
+
+        private void Awake()
+        {
+            playerController = transform.parent.GetComponent<CharacterController>();
+            anim = GetComponent<Animation>();
+        }
+
+        private void WalkAnimators()
+        {
+            if (playerController.isGrounded)
+                if (transform.parent.GetComponent<PlayerController>().IsMoving)
+                    if (left)
                     {
-                        anim.Play("WalkLeft");
-                        left = false;
-                        right = true;
+                        if (!anim.isPlaying)
+                        {
+                            anim.Play("WalkLeft");
+                            left = false;
+                            right = true;
+                        }
                     }
-                }
-                else if (right)
-                {
-                    if (!anim.isPlaying)
+                    else if (right)
                     {
-                        anim.Play("WalkRight");
-                        left = true;
-                        right = false;
+                        if (!anim.isPlaying)
+                        {
+                            anim.Play("WalkRight");
+                            left = true;
+                            right = false;
+                        }
                     }
-                }
-    }
+        }
 
-    private void FixedUpdate()
-    {
-        WalkAnimators();
+        private void FixedUpdate()
+        {
+            WalkAnimators();
+        }
     }
 }

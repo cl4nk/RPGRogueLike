@@ -1,31 +1,34 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Armor", menuName = "Items/Armor", order = 1)]
-public class ArmorItemData : EquipableItemData
+namespace Item
 {
-    public enum SLOT
+    [CreateAssetMenu(fileName = "New Armor", menuName = "Items/Armor", order = 1)]
+    public class ArmorItemData : EquipableItemData
     {
-        HEAD,
-        CHEST,
-        LEGS,
-        SHOOES
-    }
+        public enum SLOT
+        {
+            HEAD,
+            CHEST,
+            LEGS,
+            SHOOES
+        }
 
-    public SLOT slot;
+        public SLOT slot;
 
-    private void OnEnable()
-    {
-        type = TYPE.ARMOR;
-    }
+        private void OnEnable()
+        {
+            type = TYPE.ARMOR;
+        }
 
-    public bool IsBetterThan(ArmorItemData armorToCompare)
-    {
-        if (!armorToCompare)
+        public bool IsBetterThan(ArmorItemData armorToCompare)
+        {
+            if (!armorToCompare)
+                return false;
+
+            if (constitution > armorToCompare.constitution)
+                return true;
+
             return false;
-
-        if (constitution > armorToCompare.constitution)
-            return true;
-
-        return false;
+        }
     }
 }

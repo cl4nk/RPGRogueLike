@@ -1,6 +1,10 @@
-﻿using UnityEngine;
+﻿using Item;
+using UnityEngine;
 
-public class ItemButton : MonoBehaviour
+namespace UI
 {
-    public ItemData itemData;
+    public class ItemButton : MonoBehaviour
+    {
+        public ItemData itemData;
+    }
 }

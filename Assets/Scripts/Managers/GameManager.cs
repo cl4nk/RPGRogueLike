@@ -1,77 +1,81 @@
-﻿using UnityEngine;
+﻿using Character;
+using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace Managers
 {
-    public delegate void OnStateDelegate();
-
-    public enum GameState
+    public class GameManager : MonoBehaviour
     {
-        MainMenu,
-        Loading,
-        Playing,
-        Pause
-    }
+        public delegate void OnStateDelegate();
 
-    private static GameManager instance;
-
-    private GameState state = GameState.MainMenu;
-
-    public static GameManager Instance
-    {
-        get
+        public enum GameState
         {
-            if (instance == null)
-                instance = FindObjectOfType<GameManager>();
-
-            return instance;
+            MainMenu,
+            Loading,
+            Playing,
+            Pause
         }
-    }
 
-    public PlayerController PlayerInstance { get; set; }
+        private static GameManager instance;
 
-    public event OnStateDelegate OnMainMenu;
-    public event OnStateDelegate OnLoading;
-    public event OnStateDelegate OnPlaying;
-    public event OnStateDelegate OnPause;
+        private GameState state = GameState.MainMenu;
 
-    private void Start()
-    {
-        if (OnMainMenu != null)
-            OnMainMenu();
-        LevelManager.Instance.OnLoadingFinish += () =>
+        public static GameManager Instance
         {
-            if (OnPlaying != null)
-                OnPlaying();
-        };
-    }
+            get
+            {
+                if (instance == null)
+                    instance = FindObjectOfType<GameManager>();
 
-    public void LoadFirstLevel()
-    {
-        Destroy(GameObject.Find("Main Camera"));
-        Destroy(GameObject.Find("EventSystem"));
-        LevelManager.Instance.AsyncLoadLevel(LevelManager.FIRST_LEVEL_ID);
-        LevelManager.Instance.Init();
-    }
+                return instance;
+            }
+        }
 
-    public void LoadMainMenu()
-    {
-        LevelManager.Instance.LoadMainMenu();
-    }
+        public PlayerController PlayerInstance { get; set; }
 
-    public void LoadLastSave()
-    {
-        Destroy(GameObject.Find("EventSystem"));
-        LevelManager.Instance.Place = LevelManager.PLACES.CampFire;
-        LevelManager.Instance.InitSavedGame();
-    }
+        public event OnStateDelegate OnMainMenu;
+        public event OnStateDelegate OnLoading;
+        public event OnStateDelegate OnPlaying;
+        public event OnStateDelegate OnPause;
 
-    public void Quit()
-    {
-        Application.Quit();
-    }
+        private void Start()
+        {
+            if (OnMainMenu != null)
+                OnMainMenu();
+            LevelManager.Instance.OnLoadingFinish += () =>
+            {
+                if (OnPlaying != null)
+                    OnPlaying();
+            };
+        }
 
-    private void OnApplicationQuit()
-    {
-        SaveManager.RemoveCurrentFloor();
+        public void LoadFirstLevel()
+        {
+            //Destroy(GameObject.Find("Main Camera"));
+            //Destroy(GameObject.Find("EventSystem"));
+            LevelManager.Instance.AsyncLoadLevel(LevelManager.FIRST_LEVEL_ID);
+            LevelManager.Instance.Init();
+        }
+
+        public void LoadMainMenu()
+        {
+            LevelManager.Instance.LoadMainMenu();
+        }
+
+        public void LoadLastSave()
+        {
+            //Destroy(GameObject.Find("EventSystem"));
+            LevelManager.Instance.AsyncLoadLevel(LevelManager.FIRST_LEVEL_ID);
+            LevelManager.Instance.InitSavedGame();
+        }
+
+        public void Quit()
+        {
+            Application.Quit();
+        }
+
+        private void OnApplicationQuit()
+        {
+            SaveManager.RemoveCurrentFloor();
+        }
     }
 }

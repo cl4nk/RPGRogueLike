@@ -1,75 +1,80 @@
-﻿using UnityEngine;
+﻿using Managers;
+using UI;
+using UnityEngine;
 
-public class PlayerCamera : MonoBehaviour
+namespace Character
 {
-    [SerializeField] private float distance;
-
-    [SerializeField] private float height;
-
-    private float mouseMovementY;
-
-    private float rotationY;
-
-    [SerializeField] private float smooth = 200f;
-
-    private void Start()
+    public class PlayerCamera : MonoBehaviour
     {
-        RegisterInputFunctions();
-        Cursor.lockState = CursorLockMode.Locked;
-    }
+        [SerializeField] private float distance;
 
-    private void RegisterInputFunctions()
-    {
-        InputManager input = InputManager.Instance;
+        [SerializeField] private float height;
 
-        input.vertical += SetRotationY;
+        private float mouseMovementY;
 
-        UIGame.Instance.lockControl += ToggleCursorLock;
-        UIGame.Instance.unlockControl += ToggleCursorLock;
+        private float rotationY;
 
-        input.menuIsDown += ToggleCursorLock;
-        input.characIsDown += ToggleCursorLock;
-        input.inventoryIsDown += ToggleCursorLock;
-    }
+        [SerializeField] private float smooth = 200f;
 
-    public void ToggleCursorLock()
-    {
-        if (Cursor.lockState == CursorLockMode.Locked)
+        private void Start()
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else
-        {
+            RegisterInputFunctions();
             Cursor.lockState = CursorLockMode.Locked;
         }
-    }
 
-    private void SetRotationY(float axis)
-    {
-        if (Cursor.lockState == CursorLockMode.Locked)
-            mouseMovementY = axis;
-    }
-
-    private void FixedUpdate()
-    {
-        if (Cursor.lockState == CursorLockMode.Locked)
+        private void RegisterInputFunctions()
         {
-            float targetHeight = transform.parent.position.y + height;
-            float currentHeight = transform.position.y;
+            InputManager input = InputManager.Instance;
 
-            float targetDistance = transform.parent.position.z - distance;
-            float currentDistance = transform.position.z;
+            input.vertical += SetRotationY;
 
-            currentHeight = Mathf.LerpAngle(currentHeight, targetHeight, smooth * Time.deltaTime);
-            currentDistance = Mathf.LerpAngle(currentDistance, targetDistance, smooth * Time.deltaTime);
+            UIGame.Instance.lockControl += ToggleCursorLock;
+            UIGame.Instance.unlockControl += ToggleCursorLock;
 
-            transform.position = new Vector3(transform.position.x, currentHeight, currentDistance);
+            input.menuIsDown += ToggleCursorLock;
+            input.characIsDown += ToggleCursorLock;
+            input.inventoryIsDown += ToggleCursorLock;
+        }
 
-            rotationY += mouseMovementY * smooth * Time.deltaTime;
-            rotationY = Mathf.Clamp(rotationY, -60, 60);
+        public void ToggleCursorLock()
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+            }
+            else
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+            }
+        }
 
-            transform.localEulerAngles = new Vector3(-rotationY, 0, 0);
+        private void SetRotationY(float axis)
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+                mouseMovementY = axis;
+        }
+
+        private void FixedUpdate()
+        {
+            if (Cursor.lockState == CursorLockMode.Locked)
+            {
+                float targetHeight = transform.parent.position.y + height;
+                float currentHeight = transform.position.y;
+
+                float targetDistance = transform.parent.position.z - distance;
+                float currentDistance = transform.position.z;
+
+                currentHeight = Mathf.LerpAngle(currentHeight, targetHeight, smooth * Time.deltaTime);
+                currentDistance = Mathf.LerpAngle(currentDistance, targetDistance, smooth * Time.deltaTime);
+
+                transform.position = new Vector3(transform.position.x, currentHeight, currentDistance);
+
+                rotationY += mouseMovementY * smooth * Time.deltaTime;
+                rotationY = Mathf.Clamp(rotationY, -60, 60);
+
+                transform.localEulerAngles = new Vector3(-rotationY, 0, 0);
+            }
         }
     }
 }

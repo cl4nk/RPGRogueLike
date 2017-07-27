@@ -1,24 +1,30 @@
-﻿using UnityEngine;
+﻿using Item;
+using Managers;
+using UnityEngine;
 
-public class Altar : InteractableObject
+namespace InteractableObjects
 {
-    public override void OnUse()
+    public class Altar : InteractableObject
     {
-        PlayerInventory playerInventory = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInventory>();
-        ItemData item = GoalManager.Instance.HasHeTheQuestItem(playerInventory);
-
-        if (item)
+        public override void OnUse()
         {
-            playerInventory.RemoveItem(item);
+            PlayerInventory playerInventory = GameObject.FindGameObjectWithTag("Player")
+                .GetComponent<PlayerInventory>();
+            ItemData item = GoalManager.Instance.HasHeTheQuestItem(playerInventory);
 
-            GameObject itemToDrop;
-            itemToDrop = Instantiate(item.prefab);
-            itemToDrop.transform.position = transform.GetChild(0).position;
+            if (item)
+            {
+                playerInventory.RemoveItem(item);
 
-            itemToDrop.AddComponent<Item>();
-            itemToDrop.GetComponent<Item>().ItemReference = item;
+                GameObject itemToDrop;
+                itemToDrop = Instantiate(item.prefab);
+                itemToDrop.transform.position = transform.GetChild(0).position;
 
-            LevelManager.Instance.GameIsOver("Win");
+                itemToDrop.AddComponent<Item.Item>();
+                itemToDrop.GetComponent<Item.Item>().ItemReference = item;
+
+                LevelManager.Instance.GameIsOver("Win");
+            }
         }
     }
 }

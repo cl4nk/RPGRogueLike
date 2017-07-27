@@ -1,30 +1,34 @@
-﻿using UnityEngine;
+﻿using Spells;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class SpellSlot : MonoBehaviour
+namespace UI
 {
-    public string nameSpell;
-
-    private Image spellSprite;
-
-    private void Awake()
+    public class SpellSlot : MonoBehaviour
     {
-        spellSprite = transform.Find("SpellSprite").GetComponent<Image>();
-    }
+        public string nameSpell;
 
-    public void ChangeSpell(Spell spell)
-    {
-        if (spell)
+        private Image spellSprite;
+
+        private void Awake()
         {
-            nameSpell = spell.name;
-            spellSprite.sprite = spell.sprite;
-            spellSprite.gameObject.SetActive(true);
+            spellSprite = transform.Find("SpellSprite").GetComponent<Image>();
         }
-        else
+
+        public void ChangeSpell(Spell spell)
         {
-            nameSpell = "";
-            spellSprite.sprite = null;
-            spellSprite.gameObject.SetActive(false);
+            if (spell)
+            {
+                nameSpell = spell.name;
+                spellSprite.sprite = spell.sprite;
+                spellSprite.gameObject.SetActive(true);
+            }
+            else
+            {
+                nameSpell = "";
+                spellSprite.sprite = null;
+                spellSprite.gameObject.SetActive(false);
+            }
         }
     }
 }

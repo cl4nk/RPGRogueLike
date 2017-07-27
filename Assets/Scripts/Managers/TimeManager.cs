@@ -1,46 +1,49 @@
 ﻿using UnityEngine;
 
-public class TimeManager : MonoBehaviour
+namespace Managers
 {
-    public enum StateGame
+    public class TimeManager : MonoBehaviour
     {
-        Running,
-        Paused
-    }
-
-    private static TimeManager instance;
-
-    private StateGame state = StateGame.Running;
-
-    public static TimeManager Instance
-    {
-        get
+        public enum StateGame
         {
-            if (!instance)
-                instance = FindObjectOfType<TimeManager>();
-
-            return instance;
+            Running,
+            Paused
         }
-    }
 
-    public StateGame State
-    {
-        get { return state; }
-        set
+        private static TimeManager instance;
+
+        private StateGame state = StateGame.Running;
+
+        public static TimeManager Instance
         {
-            if (state != value)
+            get
             {
-                state = value;
-                StateChanged();
+                if (!instance)
+                    instance = FindObjectOfType<TimeManager>();
+
+                return instance;
             }
         }
-    }
 
-    private void StateChanged()
-    {
-        if (state == StateGame.Running)
-            Time.timeScale = 1;
-        else
-            Time.timeScale = 0;
+        public StateGame State
+        {
+            get { return state; }
+            set
+            {
+                if (state != value)
+                {
+                    state = value;
+                    StateChanged();
+                }
+            }
+        }
+
+        private void StateChanged()
+        {
+            if (state == StateGame.Running)
+                Time.timeScale = 1;
+            else
+                Time.timeScale = 0;
+        }
     }
 }

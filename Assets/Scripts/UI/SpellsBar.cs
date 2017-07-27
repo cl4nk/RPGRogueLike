@@ -1,39 +1,43 @@
-﻿using UnityEngine;
+﻿using Spells;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class SpellsBar : MonoBehaviour
+namespace UI
 {
-    private Image selecSlot;
-    private SpellSlot[] spellsSlots;
-
-    private void Awake()
+    public class SpellsBar : MonoBehaviour
     {
-        spellsSlots = GetComponentsInChildren<SpellSlot>();
-        selecSlot = transform.Find("SelecSlot").GetComponent<Image>();
-    }
+        private Image selecSlot;
+        private SpellSlot[] spellsSlots;
 
-    public void SelectSpell(int index)
-    {
-        selecSlot.transform.position = spellsSlots[index].transform.position;
-    }
+        private void Awake()
+        {
+            spellsSlots = GetComponentsInChildren<SpellSlot>();
+            selecSlot = transform.Find("SelecSlot").GetComponent<Image>();
+        }
 
-    public void ChangeSpellSlot(Spell spell, int newIndex)
-    {
-        int prevIndex = GetIndexSpell(spell);
+        public void SelectSpell(int index)
+        {
+            selecSlot.transform.position = spellsSlots[index].transform.position;
+        }
 
-        if (prevIndex != -1)
-            spellsSlots[prevIndex].ChangeSpell(null);
+        public void ChangeSpellSlot(Spell spell, int newIndex)
+        {
+            int prevIndex = GetIndexSpell(spell);
 
-        if (newIndex != -1)
-            spellsSlots[newIndex].ChangeSpell(spell);
-    }
+            if (prevIndex != -1)
+                spellsSlots[prevIndex].ChangeSpell(null);
 
-    private int GetIndexSpell(Spell spell)
-    {
-        for (int index = 0; index < spellsSlots.Length; index++)
-            if (spellsSlots[index].nameSpell == spell.name)
-                return index;
+            if (newIndex != -1)
+                spellsSlots[newIndex].ChangeSpell(spell);
+        }
 
-        return -1;
+        private int GetIndexSpell(Spell spell)
+        {
+            for (int index = 0; index < spellsSlots.Length; index++)
+                if (spellsSlots[index].nameSpell == spell.name)
+                    return index;
+
+            return -1;
+        }
     }
 }

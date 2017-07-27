@@ -1,28 +1,33 @@
-﻿public class LootInventory : Inventory
+﻿using Managers;
+
+namespace Item
 {
-    private PlayerInventory playerInventory;
-
-    protected override void Start()
+    public class LootInventory : Inventory
     {
-        base.Start();
+        private PlayerInventory playerInventory;
 
-        playerInventory = GameManager.Instance.PlayerInstance.GetComponent<PlayerInventory>();
-    }
-
-    public bool AddItem(ItemData item)
-    {
-        if (CanTake(item))
+        protected override void Start()
         {
-            playerInventory.AddItem(item);
-            Remove(item);
+            base.Start();
 
-            return true;
+            playerInventory = GameManager.Instance.PlayerInstance.GetComponent<PlayerInventory>();
         }
-        return false;
-    }
 
-    private void Remove(ItemData item)
-    {
-        Items.Remove(item);
+        public bool AddItem(ItemData item)
+        {
+            if (CanTake(item))
+            {
+                playerInventory.AddItem(item);
+                Remove(item);
+
+                return true;
+            }
+            return false;
+        }
+
+        private void Remove(ItemData item)
+        {
+            Items.Remove(item);
+        }
     }
 }

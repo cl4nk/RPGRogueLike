@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 
-public class PreviewItem : MonoBehaviour
+namespace Item
 {
-    private Transform itemPosition;
-
-    private void Start()
+    public class PreviewItem : MonoBehaviour
     {
-        itemPosition = transform.Find("ItemPosition");
+        private Transform itemPosition;
 
-        // TODO Subscribe an event
-    }
+        private void Start()
+        {
+            itemPosition = transform.Find("ItemPosition");
 
-    private void ChangeItemPreview(GameObject prefab)
-    {
-        if (itemPosition.childCount != 0)
-            Destroy(itemPosition.GetChild(0).gameObject);
+            // TODO Subscribe an event
+        }
 
-        GameObject item = Instantiate(prefab);
-        item.transform.SetParent(itemPosition);
-        item.transform.localPosition = Vector3.zero;
+        private void ChangeItemPreview(GameObject prefab)
+        {
+            if (itemPosition.childCount != 0)
+                Destroy(itemPosition.GetChild(0).gameObject);
+
+            GameObject item = Instantiate(prefab);
+            item.transform.SetParent(itemPosition);
+            item.transform.localPosition = Vector3.zero;
+        }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "RangeSpell", menuName = "SpellList/RangeSpells", order = 1)]
-public class RangeSpell : Spell
+namespace Spells
 {
-    public ExplosionScript animPrefab;
-    public int damage;
-    public float duration;
-    public float frequency;
+    [CreateAssetMenu(fileName = "RangeSpell", menuName = "SpellList/RangeSpells", order = 1)]
+    public class RangeSpell : Spell
+    {
+        public ExplosionScript animPrefab;
+        public int damage;
+        public float duration;
+        public float frequency;
 
-    public int speed;
+        public int speed;
+    }
 }
