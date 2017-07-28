@@ -24,33 +24,40 @@ public class LevelGeneration : MonoBehaviour
         None = -1
     }
 
+    [Header("Stats")]
     public float baseDensity = 0.5f;
     public float baseDensitySpawn = 0.01f;
     public float baseDensityTreasure = 0.01f;
     public int baseEnemyNumber = 10;
     public int baseNbRooms = 2;
 
+    [Header("Size")]
     public int baseWidth = 50, baseHeight = 50;
-
-    public GameObject bossPrefab;
     public int cellSize = 5;
+    public int minRoomSize = 5;
 
+    [Header("Prefabs")]
     public GameObject cubePrefab;
+    public GameObject groundPrefab;
+    public GameObject bossPrefab;
+
     public GameObject[] decoPrefabs;
     public bool[] decoRandomDir;
 
     public Vector3[] decoScales;
+    public GameObject torchPrefab;
+    public GameObject treasurePrefab;
+    public GameObject doorPrefab;
+
     private float density;
     public float densityDeco = 0.01f;
     private float densitySpawn;
     private float densityTreasure;
-    public GameObject doorPrefab;
     private int enemyNumber;
     private GameObject enemySpawners;
 
     [Range(1, 100)] private int mFloor = 1;
 
-    public int minRoomSize = 5;
     private int nbRooms;
     private Vector3 normalPlainScale;
     private Vector3 normalWallScale;
@@ -69,6 +76,7 @@ public class LevelGeneration : MonoBehaviour
     private GameObject stairsObj;
     private CellPosition stairsPos;
     public GameObject stairsPrefab;
+    [Header("Step")]
     public float stepDensitySpawn = 0.01f;
     public float stepDensityTreasure = 0.01f;
     public int stepEnemyNumber = 10;
@@ -82,8 +90,7 @@ public class LevelGeneration : MonoBehaviour
     private int torchIndex;
 
     public int torchModulo = 3;
-    public GameObject torchPrefab;
-    public GameObject treasurePrefab;
+    
 
     private int width, height;
 
@@ -1030,7 +1037,7 @@ public class LevelGeneration : MonoBehaviour
     private void BuildTerrain()
     {
         int x = width, y = height;
-        GameObject obj = poolObjects.GetGround(cubePrefab);
+        GameObject obj = poolObjects.GetGround(groundPrefab);
         obj.name = "Terrain";
         obj.transform.SetParent(transform);
         Vector3 realPos = new Vector3(x * cellSize / 2, 0, y * cellSize / 2);
@@ -1042,8 +1049,8 @@ public class LevelGeneration : MonoBehaviour
     private void BuildRoof()
     {
         int x = width, y = height;
-        GameObject obj = poolObjects.GetRoof(cubePrefab);
-        obj.name = "Terrain";
+        GameObject obj = poolObjects.GetRoof(groundPrefab);
+        obj.name = "Roof";
         obj.transform.SetParent(transform);
         Vector3 realPos = new Vector3(x * cellSize / 2, cellSize, y * cellSize / 2);
         realPos.y += normalPlainScale.y / 2;
