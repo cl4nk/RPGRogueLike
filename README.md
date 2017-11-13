@@ -16,6 +16,7 @@ We are all programmers, be kind please!
   - Procedural generation of dungeon, with chests, foes, stairs, and decoration
   - Save and load
   - Spells
+  - Foes AI
   - Shop, weapons, armor, and inventory
   - Drop of exp, gold, or equipment
   - Compass
