@@ -1,6 +1,6 @@
 # RPG Rogue Like
 
-Game made with Unity 3D in three weeks, inside ISART DIGITAL, Paris, France, in the scond year of Game Programming.
+Game made with Unity 3D in three weeks, inside ISART DIGITAL, Paris, France, in the second year of Game Programming.
 
 This project was made with :
 
